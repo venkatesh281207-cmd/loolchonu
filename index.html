@@ -167,6 +167,160 @@ body { font-family:'Nunito',sans-serif; background:var(--orange); overflow:hidde
   .letter-left { display:none; }
   .gifts-row { gap:16px; }
 }
+
+/* ===== MOBILE RESPONSIVE OVERHAUL ===== */
+
+/* Password — single column on small screens, show polaroid on medium+ */
+@media(max-width:480px){
+  .pass-layout { grid-template-columns:1fr; padding:20px 16px; gap:20px; }
+  .pass-left { display:none; }
+  .pass-right { gap:14px; }
+  .pass-boxes { gap:8px; }
+  .pass-box { width:44px; height:44px; font-size:22px; }
+  .keypad { grid-template-columns:repeat(3,56px); gap:8px; }
+  .key { width:56px; height:56px; font-size:20px; }
+}
+@media(min-width:481px) and (max-width:700px){
+  .pass-layout { grid-template-columns:1fr 1fr; padding:20px; gap:0; }
+  .pass-left { display:flex; }
+  .polaroid-pass { width:clamp(120px,30vw,160px); }
+  .bear-sticker { font-size:38px; bottom:-30px; left:-14px; }
+  .keypad { grid-template-columns:repeat(3,58px); gap:9px; }
+  .key { width:58px; height:58px; font-size:20px; }
+}
+
+/* Birthday screen — tighter on mobile */
+@media(max-width:480px){
+  .bday-wrap { gap:7px; padding:14px 12px; }
+  .bday-name-big { font-size:clamp(44px,18vw,72px); }
+  .bday-sub { font-size:clamp(15px,4.5vw,20px); }
+  .bday-ronaldo { font-size:clamp(11px,3vw,14px); }
+  .bday-cake-wrap svg { width:110px; }
+  .go-gifts-btn { padding:11px 28px; font-size:14px; }
+}
+@media(min-width:481px) and (max-width:700px){
+  .bday-name-big { font-size:clamp(48px,14vw,84px); }
+  .bday-cake-wrap svg { width:125px; }
+}
+
+/* Gifts screen — stack vertically on very small screens */
+@media(max-width:380px){
+  .gifts-row { flex-direction:column; align-items:center; gap:20px; }
+  .gift-box-art { width:90px!important; height:90px!important; }
+  .gifts-title { font-size:clamp(22px,8vw,34px); }
+  .gifts-sub { font-size:11px; margin-bottom:20px; }
+}
+@media(min-width:381px) and (max-width:480px){
+  .gifts-row { gap:18px; }
+  .gift-box-art { width:clamp(75px,20vw,100px)!important; height:clamp(75px,20vw,100px)!important; }
+  .gift-item:nth-child(2) .gift-box-art { width:clamp(85px,22vw,115px)!important; height:clamp(85px,22vw,115px)!important; }
+}
+
+/* Wish screen */
+@media(max-width:480px){
+  .wish-title-big { font-size:clamp(20px,6vw,30px); }
+  .wish-msg { font-size:clamp(18px,5.5vw,26px); }
+  .blow-btn { padding:12px 36px; font-size:14px; letter-spacing:2px; }
+  #wish-cake-svg { width:clamp(140px,55vw,180px)!important; }
+}
+
+/* Memory lane — smaller cards on phone */
+@media(max-width:480px){
+  .memory-title { font-size:clamp(20px,7vw,32px); }
+  .memory-sub { font-size:11px; }
+  .carousel-track { gap:18px; padding:12px 18px; }
+  .pol-card { width:clamp(110px,38vw,140px); padding:9px 9px 36px; }
+  .pol-caption { font-size:12px; }
+  .memory-header { margin-bottom:10px; }
+}
+@media(min-width:481px) and (max-width:700px){
+  .pol-card { width:clamp(120px,26vw,150px); }
+}
+
+/* Letter screen — full width on mobile */
+@media(max-width:480px){
+  .letter-outer { padding:20px 14px; }
+  .letter-layout { flex-direction:column; }
+  .letter-left { display:none; }
+  .letter-right { width:100%; }
+  .envelope-scene { width:clamp(200px,72vw,300px); }
+  .letter-paper { padding:18px 16px; }
+  .letter-text-content { font-size:clamp(15px,4.2vw,18px); }
+}
+@media(min-width:481px) and (max-width:700px){
+  .letter-left { display:none; }
+  .envelope-scene { width:clamp(220px,52vw,320px); }
+}
+
+/* Touch-friendly tap targets — bigger on mobile */
+@media(max-width:700px){
+  .gift-item { padding:8px; }
+  .blow-btn { min-height:48px; }
+  .to-gifts-btn { min-height:44px; padding:11px 22px; bottom:16px; left:16px; }
+  .back-btn-float { min-height:44px; bottom:16px; right:16px; }
+  #music-btn { width:46px; height:46px; top:12px; right:12px; }
+}
+
+/* ===== LIGHTBOX ===== */
+#lightbox {
+  position:fixed; inset:0;
+  background:rgba(0,0,0,0.88);
+  backdrop-filter:blur(6px);
+  z-index:99998;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  opacity:0; pointer-events:none;
+  transition:opacity 0.3s ease;
+  padding:20px;
+  cursor:pointer;
+}
+#lightbox.open { opacity:1; pointer-events:all; }
+#lightbox-img {
+  max-width:min(90vw,600px);
+  max-height:75vh;
+  object-fit:contain;
+  border-radius:4px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  display:block;
+  cursor:default;
+  transition:transform 0.35s cubic-bezier(.4,0,.2,1);
+  transform:scale(0.88);
+}
+#lightbox.open #lightbox-img { transform:scale(1); }
+#lightbox-cap {
+  font-family:'Caveat',cursive;
+  font-size:clamp(16px,3.5vw,22px);
+  color:white;
+  text-align:center;
+  margin-top:16px;
+  max-width:min(88vw,560px);
+  line-height:1.4;
+  cursor:default;
+  opacity:0;
+  transform:translateY(8px);
+  transition:all 0.35s ease 0.1s;
+}
+#lightbox.open #lightbox-cap { opacity:1; transform:translateY(0); }
+#lightbox-close {
+  position:absolute; top:16px; right:16px;
+  width:40px; height:40px;
+  background:rgba(255,255,255,0.15);
+  border:1.5px solid rgba(255,255,255,0.3);
+  border-radius:50%; color:white;
+  font-size:18px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.2s;
+}
+#lightbox-close:hover { background:rgba(255,255,255,0.28); }
+#lightbox-hint {
+  position:absolute; bottom:20px;
+  font-size:12px; color:rgba(255,255,255,0.45);
+  letter-spacing:1px;
+}
+
+/* Clickable cursor on pol-card images */
+.pol-card { cursor:pointer; }
+.pol-card img { cursor:zoom-in; }
 </style>
 </head>
 <body>
@@ -203,8 +357,8 @@ body { font-family:'Nunito',sans-serif; background:var(--orange); overflow:hidde
         <div class="key" onclick="kp('7')">7</div><div class="key" onclick="kp('8')">8</div><div class="key" onclick="kp('9')">9</div>
         <div class="key" onclick="kp('*')">⌫</div><div class="key" onclick="kp('0')">0</div><div class="key empty"></div>
       </div>
-      <div class="pass-hint">hint — it's her fav code 🧡</div>
-      <div class="pass-error" id="pass-error">wrong! try again 🙈</div>
+      <div class="pass-hint">hint — it's aaj ki date 🗓️</div>
+      <div class="pass-error" id="pass-error">wrong! cmon man try again 🙈</div>
     </div>
   </div>
 </div>
@@ -348,6 +502,14 @@ body { font-family:'Nunito',sans-serif; background:var(--orange); overflow:hidde
       </div>
     </div>
   </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+  <div id="lightbox-cap" onclick="event.stopPropagation()"></div>
+  <div id="lightbox-hint">tap outside to close</div>
 </div>
 
 <script>
@@ -510,6 +672,8 @@ function buildCarousel() {
     img.onerror=function(){this.style.background='linear-gradient(135deg,#ffd6cc,#f4a261)';};
     const cap=document.createElement('div'); cap.className='pol-caption'; cap.textContent=p.cap;
     card.appendChild(img); card.appendChild(cap);
+    // Open lightbox on click/tap
+    card.addEventListener('click', ()=>openLightbox(p.src, p.cap));
     track.appendChild(card);
   });
 
@@ -527,8 +691,9 @@ function buildCarousel() {
   const outer=document.getElementById('carousel-outer');
   outer.addEventListener('mouseenter',()=>carPaused=true);
   outer.addEventListener('mouseleave',()=>carPaused=false);
-  outer.addEventListener('touchstart',()=>carPaused=true,{passive:true});
-  outer.addEventListener('touchend',()=>setTimeout(()=>carPaused=false,1200),{passive:true});
+  // On touch: pause briefly but allow tap-to-open (click event handles that)
+  outer.addEventListener('touchstart',()=>{ carPaused=true; },{passive:true});
+  outer.addEventListener('touchend',()=>{ setTimeout(()=>{ carPaused=false; },800); },{passive:true});
 }
 
 function runCarousel() {
@@ -609,7 +774,25 @@ function typeWriter(text,el,speed,done) {
   next();
 }
 
-/* MUSIC */
+/* LIGHTBOX */
+function openLightbox(src, cap) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  const capEl = document.getElementById('lightbox-cap');
+  img.src = src;
+  capEl.textContent = cap;
+  lb.classList.add('open');
+  carPaused = true; // pause carousel while viewing
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  carPaused = false; // resume carousel
+}
+// Close on Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+});
 let mOn=false;
 const mus=document.getElementById('bg-music');
 function tryMusic(){
